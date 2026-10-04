@@ -55,7 +55,7 @@ if ($RequiredCheck.Count -eq 0) { throw 'At least one required status check is r
 $protection = @{
     required_status_checks = @{ strict = $true; contexts = $RequiredCheck }
     enforce_admins = $true
-    required_pull_request_reviews = @{ dismissal_restrictions = @{}; dismiss_stale_reviews = $false; require_code_owner_reviews = $false; required_approving_review_count = 1; require_last_push_approval = $false }
+    required_pull_request_reviews = @{ dismissal_restrictions = $null; dismiss_stale_reviews = $false; require_code_owner_reviews = $false; required_approving_review_count = 1; require_last_push_approval = $false }
     restrictions = $null
     required_linear_history = $false
     allow_force_pushes = $false
