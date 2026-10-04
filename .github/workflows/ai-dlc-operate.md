@@ -16,6 +16,7 @@ max-turns: 10
 safe-outputs:
   add-labels:
     allowed: [incident-proposed]
+    pull-requests: false
     max: 1
   add-comment:
     max: 1

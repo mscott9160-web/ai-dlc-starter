@@ -16,6 +16,7 @@ max-turns: 10
 safe-outputs:
   add-labels:
     allowed: [design-proposed]
+    pull-requests: false
     max: 1
   jobs:
     upsert-design-comment:

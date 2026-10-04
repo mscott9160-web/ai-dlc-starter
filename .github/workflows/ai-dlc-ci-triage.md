@@ -17,8 +17,10 @@ max-turns: 8
 safe-outputs:
   add-labels:
     allowed: [ci-triage-proposed]
+    issues: false
     max: 1
   add-comment:
+    issues: false
     max: 1
   report-failed-jobs: false
 jobs:

@@ -16,6 +16,7 @@ max-turns: 10
 safe-outputs:
   add-labels:
     allowed: [plan-proposed, needs-info]
+    pull-requests: false
     max: 3
   jobs:
     upsert-plan-comment:

@@ -16,6 +16,7 @@ max-turns: 8
 safe-outputs:
   add-labels:
     allowed: [release-proposed]
+    pull-requests: false
     max: 1
   add-comment:
     max: 1

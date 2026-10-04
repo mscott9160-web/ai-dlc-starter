@@ -15,8 +15,10 @@ max-turns: 12
 safe-outputs:
   add-labels:
     allowed: [review-proposed]
+    issues: false
     max: 1
   add-comment:
+    issues: false
     max: 1
   report-failed-jobs: false
 jobs:

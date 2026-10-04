@@ -16,6 +16,7 @@ max-turns: 10
 safe-outputs:
   add-labels:
     allowed: [implementation-proposed]
+    pull-requests: false
     max: 1
   create-pull-request:
     draft: true
