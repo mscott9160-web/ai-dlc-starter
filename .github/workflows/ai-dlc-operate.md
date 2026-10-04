@@ -2,9 +2,10 @@
 description: Summarizes incidents and drafts evidence-based follow-up actions.
 on:
   issues:
-    types: [opened, reopened]
+    types: [labeled]
   roles: all
-if: contains(github.event.issue.labels.*.name, 'incident')
+if: github.event.label.name == 'incident-triage-requested'
+tracker-id: ai-dlc-operate
 permissions:
   contents: read
   issues: read
@@ -13,8 +14,32 @@ engine:
   model: auto
 max-turns: 10
 safe-outputs:
+  add-labels:
+    allowed: [incident-proposed]
+    max: 1
   add-comment:
     max: 1
+  report-failed-jobs: false
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    outputs:
+      allowed: ${{ steps.check.outputs.allowed }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: check
+        uses: actions/github-script@v9
+        env:
+          REQUIRED_LABEL: incident-triage-requested
+          REQUIRED_MARKER: ""
+          MAINTAINER: mscott9160-web
+        with:
+          script: require('./scripts/check-ai-dlc-gate.js')
+  agent:
+    needs: [gate]
+    if: needs.gate.outputs.allowed == 'true'
 timeout-minutes: 8
 ---
 # Operations assistant
