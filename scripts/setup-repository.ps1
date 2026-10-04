@@ -18,8 +18,14 @@ function Invoke-GhApi {
 
 function Test-GhApi {
     param([string]$Endpoint)
-    & gh api $Endpoint 2>$null
-    return $LASTEXITCODE -eq 0
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        & gh api $Endpoint 1>$null 2>$null
+        return $LASTEXITCODE -eq 0
+    } finally {
+        $ErrorActionPreference = $previousPreference
+    }
 }
 
 $labels = @(
