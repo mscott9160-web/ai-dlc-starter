@@ -18,8 +18,8 @@ Small work bypasses Design only when the maintainer applies `plan-approved-small
 
 ## Use in a project
 
-1. Tag a release of this repository, for example `v1.0.0`.
-2. Install workflows from the pinned source with `gh aw add mscott9160-web/ai-dlc-starter/.github/workflows/ai-dlc-plan.md@v1.0.0`, then repeat for the remaining workflow source files.
+1. Tag a release of this repository, for example `v1.0.0-rc.1`.
+2. Install workflows from the pinned source with `gh aw add mscott9160-web/ai-dlc-starter/.github/workflows/ai-dlc-plan.md@v1.0.0-rc.1`, then repeat for the remaining workflow source files.
 3. Update installed workflows with `gh aw update`; gh-aw tracks each workflow's `source` automatically.
 4. Run `./scripts/setup-repository.ps1 -Repo owner/repository -Maintainer mscott9160-web`.
 5. Configure `COPILOT_GITHUB_TOKEN` manually as a repository Actions secret.
