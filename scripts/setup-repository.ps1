@@ -4,7 +4,7 @@ param(
     [string]$Repo,
     [Parameter(Mandatory)]
     [string]$Maintainer,
-    [string[]]$RequiredCheck = @()
+    [string[]]$RequiredCheck = @('Validate Agentic Workflows')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -13,7 +13,8 @@ function Invoke-GhApi {
     param([string]$Method, [string]$Endpoint, [string]$Body)
     $arguments = @('api', '--method', $Method, $Endpoint)
     if ($Body) { $arguments += @('--input', '-') }
-    if ($Body) { $Body | gh @arguments | Out-Null } else { gh @arguments | Out-Null }
+    if ($Body) { $Body | & gh @arguments 2>&1 | Out-String | Write-Verbose } else { & gh @arguments 2>&1 | Out-String | Write-Verbose }
+    if ($LASTEXITCODE -ne 0) { throw "gh api $Method $Endpoint failed with exit code $LASTEXITCODE." }
 }
 
 function Test-GhApi {
@@ -50,8 +51,7 @@ $environmentBody = @{ reviewers = @(@{ type = 'User'; id = [int64]$maintainerId 
 Invoke-GhApi -Method 'PUT' -Endpoint "repos/$Repo/environments/production" -Body $environmentBody
 Write-Output 'Ensured production environment with maintainer reviewer.'
 
-$checks = @()
-foreach ($check in $RequiredCheck) { $checks += @{ context = $check; app_id = $null } }
+if ($RequiredCheck.Count -eq 0) { throw 'At least one required status check is required to protect main.' }
 $protection = @{
     required_status_checks = @{ strict = $true; contexts = $RequiredCheck }
     enforce_admins = $true
